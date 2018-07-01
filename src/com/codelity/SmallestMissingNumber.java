@@ -2,7 +2,7 @@ package com.codelity;
 
 import java.util.Arrays;
 
-public class CodelityProblem {
+public class SmallestMissingNumber {
 
     /*1. Missing smallest integer*/
 
@@ -26,7 +26,7 @@ public class CodelityProblem {
                 continue;
             }
 
-            if (i + 1 != length && A[i + 1] - A[i] > 1 && onePresent|| (i == length - 1 && onePresent)) {
+            if (i + 1 != length && A[i + 1] - A[i] > 1 && onePresent || (i == length - 1 && onePresent)) {
                 return A[i] + 1;
             }
         }
@@ -37,7 +37,7 @@ public class CodelityProblem {
     }
 
     public static void main(String[] args) {
-        int[] inputArray = new int[]{10000,2};
+        int[] inputArray = new int[]{10000, 2};
         System.out.println(findSmallestMissingInteger(inputArray));
     }
 }
