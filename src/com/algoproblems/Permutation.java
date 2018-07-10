@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Permutation {
+public class Permutation implements Comparable<Permutation>{
 
     public static void main(String[] args) {
         System.out.println(solution(987645321));
@@ -49,5 +49,10 @@ public class Permutation {
             fact = fact * i;
         }
         return fact;
+    }
+
+    @Override
+    public int compareTo(Permutation o) {
+        return 0;
     }
 }
