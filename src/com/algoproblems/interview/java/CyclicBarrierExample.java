@@ -1,4 +1,4 @@
-package com.interview.java;
+package com.algoproblems.interview.java;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,32 +8,23 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class CyclicBarrierDemoCpy {
+public class CyclicBarrierExample {
     private final CyclicBarrier cyclicBarrier;
 
-    public CyclicBarrierDemoCpy(int n, Runnable barrierTask) {
+    public CyclicBarrierExample(int n, Runnable barrierTask) {
         this.cyclicBarrier = new CyclicBarrier(n, barrierTask);
     }
 
-    ExecutorService executorService = Executors.newFixedThreadPool(5);
-
-    public static Runnable printSum(List<Integer> nums) {
-        return () -> {
-            System.out.println("Inside barrier task!");
-            System.out.println(nums.stream().reduce((a, b) -> a + b).get());
-        };
-    }
-
+    private ExecutorService executorService = Executors.newFixedThreadPool(5);
 
     public static void main(String[] args) {
         List<Integer> nums = Arrays.asList(1, 2, 3, 4);
         List<Integer> squared = new ArrayList<>();
-
-        CyclicBarrierDemoCpy task = new CyclicBarrierDemoCpy(nums.size(), () -> {
+        CyclicBarrierExample task = new CyclicBarrierExample(nums.size(), () -> {
             System.out.println("Inside barrier task!");
-            System.out.println(squared.stream().reduce((a, b) -> a + b).get());
+            System.out.println(squared.stream().reduce(Integer::sum).get());
         });
-        nums.forEach(num -> {
+        Arrays.asList(1, 2, 3, 4).forEach(num -> {
             task.executorService.execute(() -> {
                 System.out.println("num:: " + num + " " + Thread.currentThread().getName());
                 try {
@@ -46,6 +37,7 @@ public class CyclicBarrierDemoCpy {
                 }
             });
         });
+        System.out.println("Thread Name: "+Thread.currentThread().getName());
         task.executorService.shutdown();
     }
 }

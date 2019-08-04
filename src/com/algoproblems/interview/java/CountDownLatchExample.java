@@ -1,4 +1,4 @@
-package com.interview.java;
+package com.algoproblems.interview.java;
 
 import java.util.ArrayList;
 import java.util.Arrays;

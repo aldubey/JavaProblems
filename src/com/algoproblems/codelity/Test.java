@@ -1,4 +1,4 @@
-package com.codelity;
+package com.algoproblems.codelity;
 
 import java.util.Comparator;
 import java.util.TreeSet;
