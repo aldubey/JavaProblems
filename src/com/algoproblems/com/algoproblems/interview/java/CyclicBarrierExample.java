@@ -15,7 +15,7 @@ public class CyclicBarrierExample {
         this.cyclicBarrier = new CyclicBarrier(n, barrierTask);
     }
 
-    private ExecutorService executorService = Executors.newFixedThreadPool(5);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(5);
 
     public static void main(String[] args) {
         List<Integer> nums = Arrays.asList(1, 2, 3, 4);
@@ -24,19 +24,15 @@ public class CyclicBarrierExample {
             System.out.println("Inside barrier task!");
             System.out.println(squared.stream().reduce(Integer::sum).get());
         });
-        Arrays.asList(1, 2, 3, 4).forEach(num -> {
-            task.executorService.execute(() -> {
-                System.out.println("num:: " + num + " " + Thread.currentThread().getName());
-                try {
-                    squared.add(num * num);
-                    task.cyclicBarrier.await();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (BrokenBarrierException e) {
-                    e.printStackTrace();
-                }
-            });
-        });
+        Arrays.asList(1, 2, 3, 4).forEach(num -> task.executorService.execute(() -> {
+            System.out.println("num:: " + num + " " + Thread.currentThread().getName());
+            try {
+                squared.add(num * num);
+                task.cyclicBarrier.await();
+            } catch (InterruptedException | BrokenBarrierException e) {
+                e.printStackTrace();
+            }
+        }));
         System.out.println("Thread Name: "+Thread.currentThread().getName());
         task.executorService.shutdown();
     }
