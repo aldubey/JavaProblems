@@ -14,7 +14,7 @@ public class CountDownLatchExample {
         this.countDownLatch = new CountDownLatch(n);
     }
 
-    private ExecutorService executorService = Executors.newFixedThreadPool(5);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(5);
 
     public static void main(String[] args) {
         List<Integer> nums = Arrays.asList(1, 2, 3, 4);
@@ -36,7 +36,7 @@ public class CountDownLatchExample {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(squared.stream().reduce((a, b) -> a + b).get());
+        System.out.println(squared.stream().reduce(Integer::sum).get());
         System.out.println("Thread Name: " + Thread.currentThread().getName());
         task.executorService.shutdown();
     }
